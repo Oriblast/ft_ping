@@ -147,7 +147,7 @@ char *find_ip(char *hostname)
             struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
             addr = &(ipv4->sin_addr);
         } else {
-            continue; // skip IPv6 si tu veux simple
+            continue;
         }
 
         inet_ntop(p->ai_family, addr, ipstr, sizeof ipstr);
@@ -287,7 +287,7 @@ int main(int argc, char **argv)
     struct icmp_packet packet;
     memset(&packet, 0, sizeof(packet));
 
-    packet.hdr.type = ICMP_ECHO;    // Type 8 = Echo Request
+    packet.hdr.type = ICMP_ECHO;
     packet.hdr.code = 0;
     packet.hdr.un.echo.id = getpid() & 0xFFFF;
     packet.hdr.un.echo.sequence = 0;
@@ -323,6 +323,7 @@ int main(int argc, char **argv)
     double timeLimit = 2000;
     while (1)
     {
+        printf("%d", ping.opts.c);
         packet.hdr.un.echo.sequence++;
         ping.seq++;
         packet.hdr.checksum = 0;
